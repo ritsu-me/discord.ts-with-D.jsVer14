@@ -1,19 +1,18 @@
-import { Message, Client } from 'discord.js'
+import { Message, Client, GatewayIntentBits } from 'discord.js'
 import dotenv from 'dotenv'
 import logger from "signale"
 
 dotenv.config()
 
 const client = new Client({
-    intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES'],
-})
+    intents: Object.values(GatewayIntentBits).filter((n): n is number => typeof n === "number")
+});
 
 client.once('ready', () => {
-    logger.success('Ready!')
     if (!client.user) {
         return
     } else {
-        console.log(client.user.tag)
+        logger.success(`Logged in as ${client.user.tag}!!`)
     }
 })
 
